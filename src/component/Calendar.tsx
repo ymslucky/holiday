@@ -17,7 +17,7 @@ export default function Calendar({calendar}: { calendar: { title: string, startD
             </div>
             <div className="grid grid-cols-7 gap-2 md:gap-4 mt-4">
                 {Array.from({length: Math.max(0, startDay + days - 1)}, (_, index) => {
-                    const dayNumber = index - startDay + 1; // 修改: index - startDay + 2 -> index - startDay + 1
+                    const dayNumber = index - startDay + 2; // 修改: index - startDay + 2 -> index - startDay + 1
                     if (dayNumber <= 0) return <div key={index}/>; // 添加: 确保不显示负数日期
                     return (
                         <div key={index}
