@@ -47,6 +47,7 @@ export default function Calendar({calendar}: CalendarProps) {
             {/* 日期格子 */}
             <div className="grid grid-cols-7 gap-2 md:gap-4 mt-4">
                 {calendarCells.map((dayNumber, index) => {
+                    if (dayNumber === null) return <div key={index}/>;
                     const isToday = dayNumber === today;
                     return (
                         <div
