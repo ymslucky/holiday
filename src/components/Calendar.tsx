@@ -5,7 +5,10 @@ import {Holiday} from "@/types/Holiday";
 // 工具函数集合
 const DateUtils = {
     getDaysInMonth: (year: number, month: number): number => new Date(year, month + 1, 0).getDate(),
-    getFirstDayOfWeek: (year: number, month: number): number => new Date(year, month, 1).getDay(),
+    getFirstDayOfWeek: (year: number, month: number): number => {
+        const dayOfWeek = new Date(year, month, 1).getDay();
+        return dayOfWeek === 0 ? 7 : dayOfWeek;
+    },
     getDaysBetweenDates: (startDateStr: string, endDateStr: string): string[] => {
         const dates: string[] = [];
         const startDate = new Date(startDateStr);
