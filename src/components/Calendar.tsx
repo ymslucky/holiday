@@ -1,26 +1,6 @@
 import React from 'react';
 import {Holiday} from "@/types/Holiday";
-
-
-// 工具函数集合
-const DateUtils = {
-    getDaysInMonth: (year: number, month: number): number => new Date(year, month + 1, 0).getDate(),
-    getFirstDayOfWeek: (year: number, month: number): number => {
-        const dayOfWeek = new Date(year, month, 1).getDay();
-        return dayOfWeek === 0 ? 7 : dayOfWeek;
-    },
-    getDaysBetweenDates: (startDateStr: string, endDateStr: string): string[] => {
-        const dates: string[] = [];
-        const startDate = new Date(startDateStr);
-        const endDate = new Date(endDateStr);
-        while (startDate <= endDate) {
-            dates.push(DateUtils.formatDate(startDate));
-            startDate.setDate(startDate.getDate() + 1);
-        }
-        return dates;
-    },
-    formatDate: (date: Date): string => `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')}`
-};
+import {DateUtils} from "@/utils/DateUtils";
 
 interface CalendarProps {
     calendar: {
