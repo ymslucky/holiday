@@ -71,7 +71,7 @@ export default function Calendar({calendar}: CalendarProps) {
             </div>
 
             {/* 日期格子 */}
-            <div className="grid grid-cols-7 gap-2 md:gap-4 mt-4">
+            <div className="grid grid-cols-7 grid-rows-6 gap-2 md:gap-4 mt-4">
                 {Array.from({length: firstDayOfWeek - 1}, (_, index) => (
                     <div key={`empty-${index}`}/>
                 ))}
