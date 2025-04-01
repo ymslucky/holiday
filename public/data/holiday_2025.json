@@ -1,0 +1,52 @@
+[
+  {
+    "name": "元旦",
+    "startDate": "2025-01-01",
+    "endDate": "2025-01-02",
+    "txDateList": []
+  },
+  {
+    "name": "春节",
+    "startDate": "2025-01-28",
+    "endDate": "2025-02-04",
+    "txDateList": [
+      "2025-01-26",
+      "2025-02-08"
+    ]
+  },
+  {
+    "name": "清明节",
+    "startDate": "2025-04-04",
+    "endDate": "2025-04-06",
+    "txDateList": []
+  },
+  {
+    "name": "劳动节",
+    "startDate": "2025-05-01",
+    "endDate": "2025-05-05",
+    "txDateList": [
+      "2025-04-27"
+    ]
+  },
+  {
+    "name": "端午节",
+    "startDate": "2025-05-31",
+    "endDate": "2025-06-02",
+    "txDateList": []
+  },
+  {
+    "name": "国庆节",
+    "startDate": "2025-10-01",
+    "endDate": "2025-10-08",
+    "txDateList": [
+      "2025-09-28",
+      "2025-10-11"
+    ]
+  },
+  {
+    "name": "中秋节",
+    "startDate": "2025-10-06",
+    "endDate": "2025-10-06",
+    "txDateList": []
+  }
+]

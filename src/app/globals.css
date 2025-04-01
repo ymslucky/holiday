@@ -24,3 +24,22 @@ body {
     color: var(--foreground);
     font-family: Arial, Helvetica, sans-serif;
 }
+
+@layer components {
+    .calendar-grid {
+        @apply w-8 md:w-12 lg:w-16 h-8 md:h-12 lg:h-16;
+        @apply flex justify-center items-center rounded-lg shadow-lg hover:shadow-blue-300;
+    }
+
+    .calendar-grid-week {
+        @apply bg-[url('/images/week.svg')] bg-cover bg-center bg-no-repeat;
+    }
+
+    .calendar-grid-holiday {
+        @apply bg-[url('/images/holiday.svg')] bg-cover bg-center bg-no-repeat;
+    }
+
+    .calendar-grid-tx {
+        @apply bg-[url('/images/tx.svg')] bg-cover bg-center bg-no-repeat;
+    }
+}
