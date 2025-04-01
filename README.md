@@ -1,6 +1,6 @@
 # 节假日日历项目
 
-这是一个基于 [Next.js](https://nextjs.org) 的项目，使用 [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app) 初始化。
+在线地址：[https://holiday.meta-p.com](https://holiday.meta-p.com)
 
 ## 项目简介
 
