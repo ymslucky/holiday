@@ -35,7 +35,7 @@ export default function RootLayout({
             href="https://github.com/ymslucky/holiday"
             target="_blank"
             rel="noopener noreferrer"
-            className="fixed top-4 right-4 w-12 h-12"
+            className="fixed top-4 right-4 w-8 h-8"
             aria-label="访问GitHub仓库（新标签页打开）"
         >
             <FontAwesomeIcon
