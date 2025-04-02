@@ -1,8 +1,11 @@
 import type {Metadata} from "next";
 import {Geist, Geist_Mono} from "next/font/google";
 import {GoogleAnalytics} from '@next/third-parties/google'
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {faGithub} from '@fortawesome/free-brands-svg-icons';
 import "./globals.css";
 
+// 字体配置保持不变，next/font 会自动优化预加载
 const geistSans = Geist({
     variable: "--font-geist-sans",
     subsets: ["latin"],
@@ -24,13 +27,29 @@ export default function RootLayout({
     children: React.ReactNode;
 }>) {
     return (
-        <html lang="en">
-        <body
-            className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        // 1. 修正网页语言为中文
+        <html lang="zh-CN">
+        <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+        {/* 2. 增加无障碍支持和新标签页打开 */}
+        <a
+            href="https://github.com/ymslucky/holiday"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="fixed top-4 right-4 w-12 h-12"
+            aria-label="访问GitHub仓库（新标签页打开）"
         >
+            <FontAwesomeIcon
+                icon={faGithub}
+                className="text-gray-500 hover:text-gray-700"
+                size="lg"  // 明确图标尺寸
+            />
+        </a>
+
         {children}
+
+        {/* 3. 将Google Analytics移到body内部 */}
+        <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID || ''}/>
         </body>
-        <GoogleAnalytics gaId="G-6WP6EJJ055"/>
         </html>
     );
 }
