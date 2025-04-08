@@ -1,4 +1,4 @@
-import {Language, Translation} from '../types';
+import {Language, Translation} from '@/types';
 
 export const translations: Record<Language, Translation> = {
     zh: {
@@ -8,7 +8,7 @@ export const translations: Record<Language, Translation> = {
         today: '今天',
         month: '月',
         year: '年',
-        language: '语言',
+        language: '中文',
         theme: '主题',
         light: '浅色',
         dark: '深色',
@@ -21,7 +21,7 @@ export const translations: Record<Language, Translation> = {
         today: 'Today',
         month: 'Month',
         year: 'Year',
-        language: 'Language',
+        language: 'English',
         theme: 'Theme',
         light: 'Light',
         dark: 'Dark',
