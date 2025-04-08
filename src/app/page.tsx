@@ -3,7 +3,6 @@
 import {useState, useEffect} from 'react';
 import {Calendar} from '@/components/Calendar';
 import {Settings} from '@/components/Settings';
-import {translations} from '@/config/translations';
 import {themes} from '@/config/themes';
 import {Language, Theme} from '@/types';
 import holidays from '../../public/data/holiday_2025.json';

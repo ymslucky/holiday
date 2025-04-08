@@ -47,15 +47,15 @@ export function Calendar({calendar, language}: CalendarProps) {
         return index + 1;
     });
 
-    const holidayDates = useMemo(() => 
-        calendar.holidays.flatMap((holiday) => 
-            DateUtils.getDaysBetweenDates(holiday.startDate, holiday.endDate)
-        ), 
+    const holidayDates = useMemo(() =>
+            calendar.holidays.flatMap((holiday) =>
+                DateUtils.getDaysBetweenDates(holiday.startDate, holiday.endDate)
+            ),
         [calendar.holidays]
     );
 
-    const txDates = useMemo(() => 
-        calendar.holidays.flatMap((holiday) => holiday.txDateList), 
+    const txDates = useMemo(() =>
+            calendar.holidays.flatMap((holiday) => holiday.txDateList),
         [calendar.holidays]
     );
 
@@ -68,7 +68,7 @@ export function Calendar({calendar, language}: CalendarProps) {
             {/* 星期标题 */}
             <div className="grid grid-cols-7 gap-2 md:gap-4 mb-4">
                 {weekDays.map((title, index) => (
-                    <div 
+                    <div
                         key={`title-${index}`}
                         className={`${styles.weekDay} ${index % 7 >= 5 ? styles.weekendDay : ''}`}
                     >
@@ -99,7 +99,7 @@ export function Calendar({calendar, language}: CalendarProps) {
     );
 }
 
-function CalendarDay({date, isHoliday = false, isTx = false, language}: CalendarDayProps) {
+function CalendarDay({date, isHoliday = false, isTx = false}: CalendarDayProps) {
     const today = new Date();
     const currentDate = new Date(date);
     const isToday = today.toDateString() === currentDate.toDateString();

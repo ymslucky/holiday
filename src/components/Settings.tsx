@@ -1,7 +1,7 @@
 import {useState} from 'react';
-import {translations} from '../config/translations';
-import {themes} from '../config/themes';
-import {Language, Theme} from '../types';
+import {translations} from '@/config/translations';
+import {themes} from '@/config/themes';
+import {Language, Theme} from '@/types';
 import {Globe, Palette} from 'lucide-react';
 
 interface SettingsProps {
@@ -26,10 +26,11 @@ export function Settings({language, theme, onLanguageChange, onThemeChange}: Set
                     className="flex items-center gap-1 px-3 py-1.5 rounded-lg bg-white/80 hover:bg-white text-gray-700 hover:text-gray-900 transition-colors shadow-sm"
                     aria-label="切换语言"
                 >
-                    <Globe size={16} />
+                    <Globe size={16}/>
                     <span className="text-sm font-medium">{translations[language].language}</span>
                 </button>
-                <div className={`absolute right-0 mt-1 w-32 rounded-lg bg-white shadow-lg overflow-hidden transition-all duration-200 ${hoveredMenu === 'language' ? 'opacity-100 visible' : 'opacity-0 invisible'}`}>
+                <div
+                    className={`absolute right-0 mt-1 w-32 rounded-lg bg-white shadow-lg overflow-hidden transition-all duration-200 ${hoveredMenu === 'language' ? 'opacity-100 visible' : 'opacity-0 invisible'}`}>
                     {Object.entries(translations).map(([lang, {language: langName}]) => (
                         <button
                             key={lang}
@@ -56,10 +57,11 @@ export function Settings({language, theme, onLanguageChange, onThemeChange}: Set
                     className="flex items-center gap-1 px-3 py-1.5 rounded-lg bg-white/80 hover:bg-white text-gray-700 hover:text-gray-900 transition-colors shadow-sm"
                     aria-label="切换主题"
                 >
-                    <Palette size={16} />
+                    <Palette size={16}/>
                     <span className="text-sm font-medium">{themes[theme].name}</span>
                 </button>
-                <div className={`absolute right-0 mt-1 w-32 rounded-lg bg-white shadow-lg overflow-hidden transition-all duration-200 ${hoveredMenu === 'theme' ? 'opacity-100 visible' : 'opacity-0 invisible'}`}>
+                <div
+                    className={`absolute right-0 mt-1 w-32 rounded-lg bg-white shadow-lg overflow-hidden transition-all duration-200 ${hoveredMenu === 'theme' ? 'opacity-100 visible' : 'opacity-0 invisible'}`}>
                     {Object.entries(themes).map(([th, {name}]) => (
                         <button
                             key={th}
