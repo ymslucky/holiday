@@ -8,9 +8,10 @@ export const DateUtils = {
         const dates: string[] = [];
         const startDate = new Date(startDateStr);
         const endDate = new Date(endDateStr);
-        while (startDate <= endDate) {
-            dates.push(DateUtils.formatDate(startDate));
-            startDate.setDate(startDate.getDate() + 1);
+        const currentDate = new Date(startDate);
+        while (currentDate <= endDate) {
+            dates.push(DateUtils.formatDate(currentDate));
+            currentDate.setDate(currentDate.getDate() + 1);
         }
         return dates;
     },

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useMemo} from 'react';
 import {Holiday} from "@/types/Holiday";
 import {DateUtils} from "@/utils/DateUtils";
 
@@ -17,7 +17,19 @@ interface CalendarDayProps {
 }
 
 // 样式常量
-const cellSizeClasses = "w-8 md:w-12 lg:w-16 h-8 md:h-12 lg:h-16";
+const styles = {
+    container: "bg-white/90 backdrop-blur-sm rounded-2xl shadow-lg p-6 md:p-8 transition-all duration-300 hover:shadow-xl",
+    title: "text-2xl md:text-3xl font-bold text-center mb-6 text-gray-800 tracking-wide",
+    weekDay: "flex justify-center items-center text-center font-medium text-sm md:text-base text-gray-600",
+    weekendDay: "text-red-500",
+    calendarDay: "calendar-grid transition-all duration-200 hover:scale-105",
+    today: "bg-blue-500 text-white shadow-lg",
+    holiday: "calendar-grid-holiday text-white",
+    tx: "calendar-grid-tx text-white",
+    weekend: "calendar-grid-week text-red-500",
+    normalDay: "bg-gray-50 hover:bg-gray-100",
+    dayNumber: "font-medium text-sm md:text-base"
+};
 
 export default function Calendar({calendar}: CalendarProps) {
     const weekDays = ['一', '二', '三', '四', '五', '六', '日'];
@@ -30,33 +42,43 @@ export default function Calendar({calendar}: CalendarProps) {
         return index + 1;
     });
 
+    const holidayDates = useMemo(() => 
+        calendar.holidays.flatMap((holiday) => 
+            DateUtils.getDaysBetweenDates(holiday.startDate, holiday.endDate)
+        ), 
+        [calendar.holidays]
+    );
 
-    const holidayDates = calendar.holidays.flatMap((holiday) => DateUtils.getDaysBetweenDates(holiday.startDate, holiday.endDate));
-    const txDates = calendar.holidays.flatMap((holiday) => holiday.txDateList);
+    const txDates = useMemo(() => 
+        calendar.holidays.flatMap((holiday) => holiday.txDateList), 
+        [calendar.holidays]
+    );
 
     return (
-        <div className="bg-white rounded-lg shadow-lg p-16 hover:transform-3d translate-x-5">
-            <h2 className="text-2xl font-semibold text-center mb-6 text-gray-800">
+        <div className={styles.container}>
+            <h2 className={styles.title}>
                 {`${curYear} 年 ${curMonth + 1} 月`}
             </h2>
 
             {/* 星期标题 */}
-            <div className="grid grid-cols-7 gap-2 md:gap-4 text-sm font-medium text-gray-500">
+            <div className="grid grid-cols-7 gap-2 md:gap-4 mb-4">
                 {weekDays.map((title, index) => (
-                    <div key={`title-${index}`}
-                         className={`flex justify-center items-center rounded-lg text-center font-bold text-xl font-serif ${index % 7 >= 5 ? 'text-red-500' : ''} ${cellSizeClasses}`}>
+                    <div 
+                        key={`title-${index}`}
+                        className={`${styles.weekDay} ${index % 7 >= 5 ? styles.weekendDay : ''}`}
+                    >
                         {title}
                     </div>
                 ))}
             </div>
 
             {/* 日期格子 */}
-            <div className="grid grid-cols-7 grid-rows-6 gap-2 md:gap-4 mt-4">
+            <div className="grid grid-cols-7 gap-2 md:gap-4">
                 {Array.from({length: firstDayOfWeek - 1}, (_, index) => (
                     <div key={`empty-${index}`}/>
                 ))}
                 {days.map((day) => {
-                    const dateString = DateUtils.formatDate(new Date(curYear, curMonth, day))
+                    const dateString = DateUtils.formatDate(new Date(curYear, curMonth, day));
                     const isHoliday = holidayDates.includes(dateString);
                     const isTx = txDates.includes(dateString);
                     return <CalendarDay
@@ -71,7 +93,6 @@ export default function Calendar({calendar}: CalendarProps) {
     );
 }
 
-
 function CalendarDay({date, isHoliday = false, isTx = false}: CalendarDayProps) {
     const curDate = new Date(date);
     const dayNumber = curDate.getDate();
@@ -79,21 +100,18 @@ function CalendarDay({date, isHoliday = false, isTx = false}: CalendarDayProps) 
     const isWeekend = curDate.getDay() === 0 || curDate.getDay() === 6;
 
     return (
-        <div className={`calendar-grid ${cellSizeClasses} ${
-            isToday ? 'bg-blue-500 text-white' : 'bg-gray-100'
-        } ${
-            isTx ? 'calendar-grid-tx' : ''
-        } ${
-            isHoliday ? 'calendar-grid-holiday' : ''
-        } ${
-            isWeekend ? 'calendar-grid-week' : ''
-        }
-        }`}>
-            {dayNumber && (
-                <div className="font-semibold">
-                    {dayNumber}
-                </div>
-            )}
+        <div 
+            className={`${styles.calendarDay} ${
+                isToday ? styles.today :
+                isHoliday ? styles.holiday :
+                isTx ? styles.tx :
+                isWeekend ? styles.weekend :
+                styles.normalDay
+            }`}
+        >
+            <div className={styles.dayNumber}>
+                {dayNumber}
+            </div>
         </div>
     )
 }

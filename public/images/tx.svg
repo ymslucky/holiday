@@ -1,7 +1,25 @@
-<svg width="800" height="600" xmlns="http://www.w3.org/2000/svg">
- <g id="Layer_1">
-  <title>Layer 1</title>
-  <text fill="#C97A86" stroke-width="0" x="216.05026" y="327.6012" id="svg_1" font-size="250" font-family="'Bodoni Moda'" text-anchor="start" xml:space="preserve" opacity="0.3" stroke="#000" transform="matrix(1.312 0 0 1.312 -63.336 -20.5977)">调</text>
- </g>
-
+<svg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="txGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFD93D" stop-opacity="0.15"/>
+      <stop offset="50%" stop-color="#FFD93D" stop-opacity="0.2"/>
+      <stop offset="100%" stop-color="#FFD93D" stop-opacity="0.15"/>
+    </linearGradient>
+    <filter id="txShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="2"/>
+      <feOffset dx="0" dy="2" result="offsetblur"/>
+      <feComponentTransfer>
+        <feFuncA type="linear" slope="0.2"/>
+      </feComponentTransfer>
+      <feMerge>
+        <feMergeNode/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  <rect width="100" height="100" rx="12" fill="url(#txGradient)"/>
+  <path d="M20,50 L80,50" stroke="#FFD93D" stroke-width="2" stroke-dasharray="4 4" opacity="0.6"/>
+  <path d="M50,20 L50,80" stroke="#FFD93D" stroke-width="2" stroke-dasharray="4 4" opacity="0.6"/>
+  <circle cx="50" cy="50" r="15" fill="none" stroke="#FFD93D" stroke-width="1.5" stroke-dasharray="3 3" opacity="0.4"/>
+  <text x="50" y="62" font-family="'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="36" fill="#FFD93D" text-anchor="middle" filter="url(#txShadow)" font-weight="500">调</text>
 </svg>
