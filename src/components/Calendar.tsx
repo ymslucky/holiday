@@ -1,6 +1,8 @@
 import React, {useMemo} from 'react';
 import {Holiday} from "@/types/Holiday";
 import {DateUtils} from "@/utils/DateUtils";
+import {translations} from '@/config/translations';
+import {Language} from '@/types';
 
 interface CalendarProps {
     calendar: {
@@ -8,12 +10,14 @@ interface CalendarProps {
         curMonth: number;
         holidays: Holiday[];
     };
+    language: Language;
 }
 
 interface CalendarDayProps {
     date: string;
     isHoliday?: boolean;
     isTx?: boolean;
+    language: Language;
 }
 
 // 样式常量
@@ -31,8 +35,9 @@ const styles = {
     dayNumber: "font-medium text-sm md:text-base"
 };
 
-export default function Calendar({calendar}: CalendarProps) {
-    const weekDays = ['一', '二', '三', '四', '五', '六', '日'];
+export function Calendar({calendar, language}: CalendarProps) {
+    const t = translations[language];
+    const weekDays = language === 'zh' ? ['一', '二', '三', '四', '五', '六', '日'] : ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 
     const curYear = calendar.curYear;
     const curMonth = calendar.curMonth;
@@ -57,7 +62,7 @@ export default function Calendar({calendar}: CalendarProps) {
     return (
         <div className={styles.container}>
             <h2 className={styles.title}>
-                {`${curYear} 年 ${curMonth + 1} 月`}
+                {`${curYear} ${t.year} ${curMonth + 1} ${t.month}`}
             </h2>
 
             {/* 星期标题 */}
@@ -86,6 +91,7 @@ export default function Calendar({calendar}: CalendarProps) {
                         date={`${curYear}-${curMonth + 1}-${day}`}
                         isHoliday={isHoliday}
                         isTx={isTx}
+                        language={language}
                     />
                 })}
             </div>
@@ -93,25 +99,28 @@ export default function Calendar({calendar}: CalendarProps) {
     );
 }
 
-function CalendarDay({date, isHoliday = false, isTx = false}: CalendarDayProps) {
-    const curDate = new Date(date);
-    const dayNumber = curDate.getDate();
-    const isToday = curDate.toDateString() === new Date().toDateString();
-    const isWeekend = curDate.getDay() === 0 || curDate.getDay() === 6;
+function CalendarDay({date, isHoliday = false, isTx = false, language}: CalendarDayProps) {
+    const today = new Date();
+    const currentDate = new Date(date);
+    const isToday = today.toDateString() === currentDate.toDateString();
+    const isWeekend = currentDate.getDay() === 0 || currentDate.getDay() === 6;
+
+    let dayClassName = styles.calendarDay;
+    if (isToday) {
+        dayClassName += ` ${styles.today}`;
+    } else if (isHoliday) {
+        dayClassName += ` ${styles.holiday}`;
+    } else if (isTx) {
+        dayClassName += ` ${styles.tx}`;
+    } else if (isWeekend) {
+        dayClassName += ` ${styles.weekend}`;
+    } else {
+        dayClassName += ` ${styles.normalDay}`;
+    }
 
     return (
-        <div 
-            className={`${styles.calendarDay} ${
-                isToday ? styles.today :
-                isHoliday ? styles.holiday :
-                isTx ? styles.tx :
-                isWeekend ? styles.weekend :
-                styles.normalDay
-            }`}
-        >
-            <div className={styles.dayNumber}>
-                {dayNumber}
-            </div>
+        <div className={dayClassName}>
+            <span className={styles.dayNumber}>{currentDate.getDate()}</span>
         </div>
-    )
-}
+    );
+} 

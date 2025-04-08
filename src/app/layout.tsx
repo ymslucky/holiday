@@ -1,8 +1,7 @@
 import type {Metadata} from "next";
 import {Geist, Geist_Mono} from "next/font/google";
 import {GoogleAnalytics} from '@next/third-parties/google'
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faGithub} from '@fortawesome/free-brands-svg-icons';
+import {Github} from 'lucide-react';
 import "./globals.css";
 
 // 字体配置保持不变，next/font 会自动优化预加载
@@ -22,32 +21,27 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({
-                                       children,
-                                   }: Readonly<{
+    children,
+}: Readonly<{
     children: React.ReactNode;
 }>) {
     return (
-        // 1. 修正网页语言为中文
         <html lang="zh-CN">
         <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        {/* 2. 增加无障碍支持和新标签页打开 */}
+        {/* 增加无障碍支持和新标签页打开 */}
         <a
             href="https://github.com/ymslucky/holiday"
             target="_blank"
             rel="noopener noreferrer"
-            className="fixed top-4 right-4 w-8 h-8"
+            className="fixed top-4 left-1/2 -translate-x-1/2 p-2 rounded-full bg-white/80 hover:bg-white shadow-md transition-all z-50"
             aria-label="访问GitHub仓库（新标签页打开）"
         >
-            <FontAwesomeIcon
-                icon={faGithub}
-                className="text-gray-500 hover:text-gray-700"
-                size="lg"  // 明确图标尺寸
-            />
+            <Github size={24} className="text-gray-700 hover:text-gray-900" />
         </a>
 
         {children}
 
-        {/* 3. 将Google Analytics移到body内部 */}
+        {/* Google Analytics */}
         <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID || ''}/>
         </body>
         </html>

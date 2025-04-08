@@ -3,6 +3,12 @@
 :root {
     --background: #ffffff;
     --foreground: #171717;
+    --holiday: #FF6B6B;
+    --tx: #FFD93D;
+    --weekend: #6C5CE7;
+    --today: #3B82F6;
+    --border: #E5E7EB;
+    --shadow: rgba(0, 0, 0, 0.1);
 }
 
 @theme inline {
@@ -14,8 +20,14 @@
 
 @media (prefers-color-scheme: dark) {
     :root {
-        --background: #0a0a0a;
+        --background: #1a1a1a;
         --foreground: #ededed;
+        --holiday: #FF7675;
+        --tx: #FFEAA7;
+        --weekend: #A29BFE;
+        --today: #60A5FA;
+        --border: #374151;
+        --shadow: rgba(0, 0, 0, 0.3);
     }
 }
 
@@ -35,20 +47,20 @@ body {
 
     .calendar-grid-week {
         @apply bg-[url('/images/week.svg')] bg-cover bg-center bg-no-repeat;
-        @apply text-[#6C5CE7];
-        @apply hover:shadow-[#6C5CE7]/20;
+        @apply text-[var(--weekend)];
+        @apply hover:shadow-[var(--weekend)]/20;
     }
 
     .calendar-grid-holiday {
         @apply bg-[url('/images/holiday.svg')] bg-cover bg-center bg-no-repeat;
-        @apply text-[#FF6B6B];
-        @apply hover:shadow-[#FF6B6B]/20;
+        @apply text-[var(--holiday)];
+        @apply hover:shadow-[var(--holiday)]/20;
     }
 
     .calendar-grid-tx {
         @apply bg-[url('/images/tx.svg')] bg-cover bg-center bg-no-repeat;
-        @apply text-[#FFD93D];
-        @apply hover:shadow-[#FFD93D]/20;
+        @apply text-[var(--tx)];
+        @apply hover:shadow-[var(--tx)]/20;
     }
 
     .calendar-grid:hover {
@@ -62,18 +74,6 @@ body {
         
         .calendar-grid:not(.calendar-grid-holiday):not(.calendar-grid-tx):not(.calendar-grid-week) {
             @apply hover:bg-gray-700;
-        }
-
-        .calendar-grid-week {
-            @apply text-[#A29BFE];
-        }
-
-        .calendar-grid-holiday {
-            @apply text-[#FF7675];
-        }
-
-        .calendar-grid-tx {
-            @apply text-[#FFEAA7];
         }
     }
 }
