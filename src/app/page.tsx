@@ -5,6 +5,7 @@ import {Calendar} from '@/components/Calendar';
 import {Settings} from '@/components/Settings';
 import {ErrorBoundary} from '@/components/ErrorBoundary';
 import {LoadingSpinner} from '@/components/LoadingSpinner';
+import {Sidebar} from '@/components/Sidebar';
 import {useTheme} from '@/hooks/useTheme';
 import {useLanguage} from '@/hooks/useLanguage';
 import holidays from '../../public/data/holiday_2025.json';
@@ -72,6 +73,17 @@ export default function HolidayCalendar() {
                 className={`flex items-center justify-center min-h-screen p-4 overflow-hidden transition-colors duration-300 ${backgroundStyle}`}
                 onWheel={handleWheel}
             >
+                <Sidebar
+                    currentDate={currentDate}
+                    displayMonthIndex={displayMonthIndex}
+                    holidays={holidays}
+                    onMonthChange={setDisplayMonthIndex}
+                    onYearChange={(year) => {
+                        const newDate = new Date(currentDate);
+                        newDate.setFullYear(year);
+                        setCurrentDate(newDate);
+                    }}
+                />
                 <Settings
                     language={language}
                     theme={theme}
