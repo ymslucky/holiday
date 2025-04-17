@@ -36,16 +36,29 @@ export default function HolidayCalendar() {
     useEffect(() => {
         const root = document.documentElement;
         const currentTheme = themes[theme];
+        
+        // 应用所有主题变量
         Object.entries(currentTheme).forEach(([key, value]) => {
             if (key !== 'name') {
                 root.style.setProperty(`--${key}`, value);
             }
         });
+
+        // 设置暗色模式类
+        if (theme === 'dark') {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
     }, [theme]);
 
     return (
         <div
-            className="flex items-center justify-center min-h-screen bg-gradient-to-br from-blue-50 to-purple-50 p-4 overflow-hidden"
+            className={`flex items-center justify-center min-h-screen p-4 overflow-hidden transition-colors duration-300 ${
+                theme === 'dark' 
+                    ? 'bg-gradient-to-br from-gray-900 to-gray-800' 
+                    : 'bg-gradient-to-br from-blue-50 to-purple-50'
+            }`}
             onWheel={handleWheel}
         >
             <Settings

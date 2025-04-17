@@ -2,7 +2,7 @@
 
 :root {
     --background: #ffffff;
-    --foreground: #171717;
+    --text: #171717;
     --holiday: #FF6B6B;
     --tx: #FFD93D;
     --weekend: #6C5CE7;
@@ -13,7 +13,7 @@
 
 @theme inline {
     --color-background: var(--background);
-    --color-foreground: var(--foreground);
+    --color-foreground: var(--text);
     --font-sans: var(--font-geist-sans);
     --font-mono: var(--font-geist-mono);
 }
@@ -21,7 +21,7 @@
 @media (prefers-color-scheme: dark) {
     :root {
         --background: #1a1a1a;
-        --foreground: #ededed;
+        --text: #ededed;
         --holiday: #FF7675;
         --tx: #FFEAA7;
         --weekend: #A29BFE;
@@ -33,7 +33,7 @@
 
 body {
     background: var(--background);
-    color: var(--foreground);
+    color: var(--text);
     font-family: Arial, Helvetica, sans-serif;
 }
 

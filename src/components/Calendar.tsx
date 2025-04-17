@@ -22,17 +22,17 @@ interface CalendarDayProps {
 
 // 样式常量
 const styles = {
-    container: "bg-white/90 backdrop-blur-sm rounded-2xl shadow-lg p-6 md:p-8 transition-all duration-300 hover:shadow-xl",
-    title: "text-2xl md:text-3xl font-bold text-center mb-6 text-gray-800 tracking-wide",
-    weekDay: "flex justify-center items-center text-center font-medium text-sm md:text-base text-gray-600",
-    weekendDay: "text-red-500",
+    container: "bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm rounded-2xl shadow-lg p-6 md:p-8 transition-all duration-300 hover:shadow-xl",
+    title: "text-2xl md:text-3xl font-bold text-center mb-6 text-gray-800 dark:text-gray-200 tracking-wide",
+    weekDay: "flex justify-center items-center text-center font-medium text-sm md:text-base text-gray-600 dark:text-gray-400",
+    weekendDay: "text-red-500 dark:text-red-400",
     calendarDay: "calendar-grid transition-all duration-200 hover:scale-105",
     today: "bg-blue-500 text-white shadow-lg",
     holiday: "calendar-grid-holiday text-white",
     tx: "calendar-grid-tx text-white",
-    weekend: "calendar-grid-week text-red-500",
-    normalDay: "bg-gray-50 hover:bg-gray-100",
-    dayNumber: "font-medium text-sm md:text-base"
+    weekend: "calendar-grid-week text-red-500 dark:text-red-400",
+    normalDay: "bg-gray-50 dark:bg-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600",
+    dayNumber: "font-medium text-sm md:text-base text-gray-700 dark:text-gray-300"
 };
 
 export function Calendar({calendar, language}: CalendarProps) {
