@@ -3,16 +3,27 @@
 import {useState, useEffect, useMemo, useCallback} from 'react';
 import {Calendar} from '@/components/Calendar';
 import {Settings} from '@/components/Settings';
-import {themes} from '@/config/themes';
-import {Language, Theme} from '@/types';
+import {ErrorBoundary} from '@/components/ErrorBoundary';
+import {LoadingSpinner} from '@/components/LoadingSpinner';
+import {useTheme} from '@/hooks/useTheme';
+import {useLanguage} from '@/hooks/useLanguage';
 import holidays from '../../public/data/holiday_2025.json';
 
 // 工具函数集合
 export default function HolidayCalendar() {
     const [currentDate, setCurrentDate] = useState(new Date());
     const [displayMonthIndex, setDisplayMonthIndex] = useState(currentDate.getMonth());
-    const [language, setLanguage] = useState<Language>('zh');
-    const [theme, setTheme] = useState<Theme>('light');
+    const [isLoading, setIsLoading] = useState(true);
+    const {theme, setTheme} = useTheme();
+    const {language, setLanguage} = useLanguage();
+
+    // 初始化加载
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setIsLoading(false);
+        }, 500);
+        return () => clearTimeout(timer);
+    }, []);
 
     // 实时更新时间 - 改为每5分钟更新一次
     useEffect(() => {
@@ -32,28 +43,6 @@ export default function HolidayCalendar() {
         adjustMonth(e.deltaY > 0 ? 1 : -1);
     }, [adjustMonth]);
 
-    // 使用 useMemo 优化主题应用
-    const currentTheme = useMemo(() => themes[theme], [theme]);
-
-    // 应用主题
-    useEffect(() => {
-        const root = document.documentElement;
-        
-        // 应用所有主题变量
-        Object.entries(currentTheme).forEach(([key, value]) => {
-            if (key !== 'name') {
-                root.style.setProperty(`--${key}`, value);
-            }
-        });
-
-        // 设置暗色模式类
-        if (theme === 'dark') {
-            document.documentElement.classList.add('dark');
-        } else {
-            document.documentElement.classList.remove('dark');
-        }
-    }, [theme, currentTheme]);
-
     // 使用 useMemo 优化日历数据
     const calendarData = useMemo(() => ({
         curYear: currentDate.getFullYear(),
@@ -69,23 +58,33 @@ export default function HolidayCalendar() {
         [theme]
     );
 
-    return (
-        <div
-            className={`flex items-center justify-center min-h-screen p-4 overflow-hidden transition-colors duration-300 ${backgroundStyle}`}
-            onWheel={handleWheel}
-        >
-            <Settings
-                language={language}
-                theme={theme}
-                onLanguageChange={setLanguage}
-                onThemeChange={setTheme}
-            />
-            <div className="m-4">
-                <Calendar
-                    calendar={calendarData}
-                    language={language}
-                />
+    if (isLoading) {
+        return (
+            <div className={`min-h-screen flex items-center justify-center ${backgroundStyle}`}>
+                <LoadingSpinner size="large" />
             </div>
-        </div>
+        );
+    }
+
+    return (
+        <ErrorBoundary>
+            <div
+                className={`flex items-center justify-center min-h-screen p-4 overflow-hidden transition-colors duration-300 ${backgroundStyle}`}
+                onWheel={handleWheel}
+            >
+                <Settings
+                    language={language}
+                    theme={theme}
+                    onLanguageChange={setLanguage}
+                    onThemeChange={setTheme}
+                />
+                <div className="m-4">
+                    <Calendar
+                        calendar={calendarData}
+                        language={language}
+                    />
+                </div>
+            </div>
+        </ErrorBoundary>
     );
 }
