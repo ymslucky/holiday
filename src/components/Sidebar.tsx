@@ -17,13 +17,10 @@ export function Sidebar({ holidays }: SidebarProps) {
     const [activeTab, setActiveTab] = useState<'stats' | 'nav' | 'holiday' | 'countdown' | 'visual'>('stats');
     
     const {
-        currentDate,
         displayMonthIndex,
         monthStats,
         nextHoliday,
         getCountdown,
-        adjustMonth,
-        changeYear,
         setDisplayMonthIndex
     } = useCalendar(holidays);
 
