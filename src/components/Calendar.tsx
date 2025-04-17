@@ -27,7 +27,7 @@ const styles = {
     weekDay: "flex justify-center items-center text-center font-medium text-sm md:text-base text-gray-600 dark:text-gray-400",
     weekendDay: "text-red-500 dark:text-red-400",
     calendarDay: "calendar-grid transition-all duration-200 hover:scale-105",
-    today: "bg-blue-500 text-white shadow-lg",
+    today: "bg-blue-500 text-white shadow-lg animate-spin-slow",
     holiday: "calendar-grid-holiday text-white",
     tx: "calendar-grid-tx text-white",
     weekend: "calendar-grid-week text-red-500 dark:text-red-400",
@@ -133,8 +133,6 @@ export const Calendar = memo(function Calendar({calendar, language}: CalendarPro
     return (
         <div className={styles.container}>
             <h2 className={styles.title}>{title}</h2>
-
-            {/* 星期标题 */}
             <div className="grid grid-cols-7 gap-2 md:gap-4 mb-4">
                 {weekDays.map((title, index) => (
                     <div
@@ -145,8 +143,6 @@ export const Calendar = memo(function Calendar({calendar, language}: CalendarPro
                     </div>
                 ))}
             </div>
-
-            {/* 日期格子 */}
             <div className="grid grid-cols-7 gap-2 md:gap-4">
                 {emptyDays}
                 {dayCells}
