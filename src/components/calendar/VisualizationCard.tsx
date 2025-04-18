@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactElement } from 'react';
 import { Card } from '../ui/Card';
 
 interface DataItem {
@@ -16,7 +16,7 @@ interface VisualizationCardProps {
 export const VisualizationCard = React.memo(function VisualizationCard({ 
     data, 
     className = '' 
-}: VisualizationCardProps) {
+}: VisualizationCardProps): ReactElement {
     return (
         <Card 
             title="本月时间分布"

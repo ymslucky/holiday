@@ -1,4 +1,4 @@
-import {useState, memo, useMemo, useCallback} from 'react';
+import {useState, memo, useMemo, useCallback, ReactElement} from 'react';
 import {translations} from '@/config/translations';
 import {themes} from '@/config/themes';
 import {Language, Theme} from '@/types';
@@ -11,14 +11,16 @@ interface SettingsProps {
     onThemeChange: (theme: Theme) => void;
 }
 
+type HoveredMenuType = 'language' | 'theme' | null;
+
 // 使用 memo 包装 Settings 组件
-export const Settings = memo(function Settings({language, theme, onLanguageChange, onThemeChange}: SettingsProps) {
-    const [hoveredMenu, setHoveredMenu] = useState<'language' | 'theme' | null>(null);
+export const Settings = memo(function Settings({language, theme, onLanguageChange, onThemeChange}: SettingsProps): ReactElement {
+    const [hoveredMenu, setHoveredMenu] = useState<HoveredMenuType>(null);
 
     // 使用 useCallback 优化事件处理函数
-    const handleLanguageMouseEnter = useCallback(() => setHoveredMenu('language'), []);
-    const handleThemeMouseEnter = useCallback(() => setHoveredMenu('theme'), []);
-    const handleMouseLeave = useCallback(() => setHoveredMenu(null), []);
+    const handleLanguageMouseEnter = useCallback((): void => setHoveredMenu('language'), []);
+    const handleThemeMouseEnter = useCallback((): void => setHoveredMenu('theme'), []);
+    const handleMouseLeave = useCallback((): void => setHoveredMenu(null), []);
 
     // 使用 useMemo 缓存语言选项
     const languageOptions = useMemo(() => 
@@ -31,6 +33,7 @@ export const Settings = memo(function Settings({language, theme, onLanguageChang
                         : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900'
                 }`}
                 onClick={() => onLanguageChange(lang as Language)}
+                type="button"
             >
                 {langName}
             </button>
@@ -49,6 +52,7 @@ export const Settings = memo(function Settings({language, theme, onLanguageChang
                         : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900'
                 }`}
                 onClick={() => onThemeChange(th as Theme)}
+                type="button"
             >
                 {name}
             </button>
@@ -79,6 +83,7 @@ export const Settings = memo(function Settings({language, theme, onLanguageChang
                 <button
                     className="flex items-center gap-1 px-3 py-1.5 rounded-lg bg-white/80 hover:bg-white text-gray-700 hover:text-gray-900 transition-colors shadow-sm"
                     aria-label="切换语言"
+                    type="button"
                 >
                     <Globe size={16}/>
                     <span className="text-sm font-medium">{languageButtonText}</span>
@@ -98,6 +103,7 @@ export const Settings = memo(function Settings({language, theme, onLanguageChang
                 <button
                     className="flex items-center gap-1 px-3 py-1.5 rounded-lg bg-white/80 hover:bg-white text-gray-700 hover:text-gray-900 transition-colors shadow-sm"
                     aria-label="切换主题"
+                    type="button"
                 >
                     <Palette size={16}/>
                     <span className="text-sm font-medium">{themeButtonText}</span>

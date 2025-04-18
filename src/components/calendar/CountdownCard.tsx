@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, ReactElement } from 'react';
 import { Card } from '../ui/Card';
 
 interface CountdownCardProps {
@@ -6,19 +6,21 @@ interface CountdownCardProps {
     className?: string;
 }
 
+const UPDATE_INTERVAL = 60000; // 每分钟更新一次
+
 export const CountdownCard = React.memo(function CountdownCard({ 
     getCountdown, 
     className = '' 
-}: CountdownCardProps) {
-    const [countdown, setCountdown] = useState(getCountdown());
+}: CountdownCardProps): ReactElement {
+    const [countdown, setCountdown] = useState<string>(getCountdown());
 
     useEffect(() => {
-        const updateCountdown = () => {
+        const updateCountdown = (): void => {
             setCountdown(getCountdown());
         };
 
         updateCountdown();
-        const interval = setInterval(updateCountdown, 60000); // 每分钟更新一次
+        const interval = setInterval(updateCountdown, UPDATE_INTERVAL);
         return () => clearInterval(interval);
     }, [getCountdown]);
 

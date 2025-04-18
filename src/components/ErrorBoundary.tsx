@@ -20,12 +20,16 @@ export class ErrorBoundary extends Component<Props, State> {
         return { hasError: true, error };
     }
 
-    public componentDidCatch(error: Error, errorInfo: ErrorInfo) {
+    public componentDidCatch(error: Error, errorInfo: ErrorInfo): void {
         console.error('错误详情:', error);
         console.error('错误堆栈:', errorInfo);
     }
 
-    public render() {
+    private handleRefresh = (): void => {
+        window.location.reload();
+    };
+
+    public render(): ReactNode {
         if (this.state.hasError) {
             return this.props.fallback || (
                 <div className="min-h-screen flex items-center justify-center bg-gray-100 dark:bg-gray-900">
@@ -37,8 +41,9 @@ export class ErrorBoundary extends Component<Props, State> {
                             抱歉，应用程序遇到了一些问题。请刷新页面重试。
                         </p>
                         <button
-                            onClick={() => window.location.reload()}
+                            onClick={this.handleRefresh}
                             className="w-full bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 transition-colors"
+                            type="button"
                         >
                             刷新页面
                         </button>

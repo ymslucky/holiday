@@ -1,8 +1,8 @@
-import React, {useMemo, memo} from 'react';
-import {Holiday} from "@/types/Holiday";
-import {DateUtils} from "@/utils/DateUtils";
-import {translations} from '@/config/translations';
-import {Language} from '@/types';
+import React, { useMemo, memo, ReactElement } from 'react';
+import { Holiday } from "@/types/Holiday";
+import { DateUtils } from "@/utils/DateUtils";
+import { translations } from '@/config/translations';
+import { Language } from '@/types';
 
 interface CalendarProps {
     calendar: {
@@ -20,8 +20,11 @@ interface CalendarDayProps {
     language: Language;
 }
 
-// 样式常量
-const styles = {
+interface CalendarStyles {
+    [key: string]: string;
+}
+
+const styles: CalendarStyles = {
     container: "bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm rounded-2xl shadow-lg p-6 md:p-8 transition-all duration-300 hover:shadow-xl",
     title: "text-2xl md:text-3xl font-bold text-center mb-6 text-gray-800 dark:text-gray-200 tracking-wide",
     weekDay: "flex justify-center items-center text-center font-medium text-sm md:text-base text-gray-600 dark:text-gray-400",
@@ -35,27 +38,20 @@ const styles = {
     dayNumber: "font-medium text-sm md:text-base text-gray-700 dark:text-gray-300"
 };
 
-// 使用 memo 包装 CalendarDay 组件
-const CalendarDay = memo(function CalendarDay({date, isHoliday = false, isTx = false}: CalendarDayProps) {
+const CalendarDay = memo(function CalendarDay({ date, isHoliday = false, isTx = false }: CalendarDayProps): ReactElement {
     const today = new Date();
     const currentDate = new Date(date);
     const isToday = today.toDateString() === currentDate.toDateString();
     const isWeekend = currentDate.getDay() === 0 || currentDate.getDay() === 6;
 
     const dayClassName = useMemo(() => {
-        let className = styles.calendarDay;
-        if (isToday) {
-            className += ` ${styles.today}`;
-        } else if (isHoliday) {
-            className += ` ${styles.holiday}`;
-        } else if (isTx) {
-            className += ` ${styles.tx}`;
-        } else if (isWeekend) {
-            className += ` ${styles.weekend}`;
-        } else {
-            className += ` ${styles.normalDay}`;
-        }
-        return className;
+        const classes = [styles.calendarDay];
+        if (isToday) classes.push(styles.today);
+        else if (isHoliday) classes.push(styles.holiday);
+        else if (isTx) classes.push(styles.tx);
+        else if (isWeekend) classes.push(styles.weekend);
+        else classes.push(styles.normalDay);
+        return classes.join(' ');
     }, [isToday, isHoliday, isTx, isWeekend]);
 
     return (
@@ -65,23 +61,39 @@ const CalendarDay = memo(function CalendarDay({date, isHoliday = false, isTx = f
     );
 });
 
-// 使用 memo 包装 Calendar 组件
-export const Calendar = memo(function Calendar({calendar, language}: CalendarProps) {
-    const t = translations[language];
-    
-    // 使用 useMemo 缓存星期标题
+CalendarDay.displayName = 'CalendarDay';
+
+const WeekDays: React.FC<{ language: Language }> = memo(({ language }) => {
     const weekDays = useMemo(() => 
         language === 'zh' ? ['一', '二', '三', '四', '五', '六', '日'] : ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
         [language]
     );
 
-    const {curYear, curMonth} = calendar;
+    return (
+        <div className="grid grid-cols-7 gap-2 md:gap-4 mb-4">
+            {weekDays.map((title, index) => (
+                <div
+                    key={`title-${index}`}
+                    className={`${styles.weekDay} ${index % 7 >= 5 ? styles.weekendDay : ''}`}
+                >
+                    {title}
+                </div>
+            ))}
+        </div>
+    );
+});
+
+WeekDays.displayName = 'WeekDays';
+
+export const Calendar = memo(function Calendar({ calendar, language }: CalendarProps): ReactElement {
+    const t = translations[language];
+    const { curYear, curMonth } = calendar;
+    
     const firstDayOfWeek = DateUtils.getFirstDayOfWeek(curYear, curMonth);
     const daysCountOfMonth = DateUtils.getDaysInMonth(curYear, curMonth);
     
-    // 使用 useMemo 缓存日期数组
     const days = useMemo(() => 
-        Array.from({length: daysCountOfMonth}, (_, index) => index + 1),
+        Array.from({ length: daysCountOfMonth }, (_, index) => index + 1),
         [daysCountOfMonth]
     );
 
@@ -97,21 +109,18 @@ export const Calendar = memo(function Calendar({calendar, language}: CalendarPro
         [calendar.holidays]
     );
 
-    // 使用 useMemo 缓存标题
     const title = useMemo(() => 
         `${curYear} ${t.year} ${curMonth + 1} ${t.month}`,
         [curYear, curMonth, t.year, t.month]
     );
 
-    // 使用 useMemo 缓存空白天数
     const emptyDays = useMemo(() => 
-        Array.from({length: firstDayOfWeek - 1}, (_, index) => (
-            <div key={`empty-${index}`}/>
+        Array.from({ length: firstDayOfWeek - 1 }, (_, index) => (
+            <div key={`empty-${index}`} />
         )),
         [firstDayOfWeek]
     );
 
-    // 使用 useMemo 缓存日期格子
     const dayCells = useMemo(() => 
         days.map((day) => {
             const dateString = DateUtils.formatDate(new Date(curYear, curMonth, day));
@@ -133,20 +142,13 @@ export const Calendar = memo(function Calendar({calendar, language}: CalendarPro
     return (
         <div className={styles.container}>
             <h2 className={styles.title}>{title}</h2>
-            <div className="grid grid-cols-7 gap-2 md:gap-4 mb-4">
-                {weekDays.map((title, index) => (
-                    <div
-                        key={`title-${index}`}
-                        className={`${styles.weekDay} ${index % 7 >= 5 ? styles.weekendDay : ''}`}
-                    >
-                        {title}
-                    </div>
-                ))}
-            </div>
+            <WeekDays language={language} />
             <div className="grid grid-cols-7 gap-2 md:gap-4">
                 {emptyDays}
                 {dayCells}
             </div>
         </div>
     );
-}); 
+});
+
+Calendar.displayName = 'Calendar'; 

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactElement } from 'react';
 import { Card } from '../ui/Card';
 
 interface StatCardProps {
@@ -13,7 +13,7 @@ export const StatCard = React.memo(function StatCard({
     value, 
     unit = '天',
     className = '' 
-}: StatCardProps) {
+}: StatCardProps): ReactElement {
     return (
         <Card className={className}>
             <p className="text-sm text-gray-500 dark:text-gray-400">{label}</p>
