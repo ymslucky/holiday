@@ -18,6 +18,9 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
     title: "假期日历",
     description: "本网站提供直观的假期日历，清晰展示放假与调休，助您轻松掌握假期安排，提前规划节日活动。",
+    icons: {
+        icon: "/images/favicon.svg",
+    },
 };
 
 export default function RootLayout({
