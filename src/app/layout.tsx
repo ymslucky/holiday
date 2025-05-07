@@ -21,8 +21,8 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({
-    children,
-}: Readonly<{
+                                       children,
+                                   }: Readonly<{
     children: React.ReactNode;
 }>) {
     return (
@@ -36,7 +36,7 @@ export default function RootLayout({
             className="fixed top-4 left-1/2 -translate-x-1/2 p-2 rounded-full bg-white/80 hover:bg-white shadow-md transition-all z-50"
             aria-label="访问GitHub仓库（新标签页打开）"
         >
-            <Github size={24} className="text-gray-700 hover:text-gray-900" />
+            <Github size={24} className="text-gray-700 hover:text-gray-900"/>
         </a>
 
         {children}

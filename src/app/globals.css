@@ -71,7 +71,7 @@ body {
         .calendar-grid {
             @apply bg-gray-800;
         }
-        
+
         .calendar-grid:not(.calendar-grid-holiday):not(.calendar-grid-tx):not(.calendar-grid-week) {
             @apply hover:bg-gray-700;
         }

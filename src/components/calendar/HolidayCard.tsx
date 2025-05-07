@@ -1,5 +1,5 @@
 import React, { ReactElement } from 'react';
-import { Card } from '../ui/Card';
+import Card from '../ui/Card';
 import { Holiday } from '@/types/Holiday';
 
 interface HolidayCardProps {

@@ -1,12 +1,12 @@
-import React, { useState, useCallback, useMemo, ReactElement } from 'react';
-import { Menu, X, Calendar as CalendarIcon, Clock, Info, PieChart, LucideIcon } from 'lucide-react';
-import { Holiday } from '@/types/Holiday';
-import { Button } from './ui/Button';
-import { StatCard } from './calendar/StatCard';
-import { HolidayCard } from './calendar/HolidayCard';
-import { CountdownCard } from './calendar/CountdownCard';
-import { VisualizationCard } from './calendar/VisualizationCard';
-import { useCalendar } from '@/hooks/useCalendar';
+import React, {ReactElement, useCallback, useMemo, useState} from 'react';
+import {Calendar as CalendarIcon, Clock, Info, LucideIcon, Menu, PieChart, X} from 'lucide-react';
+import {Holiday} from '@/types/Holiday';
+import Button from './ui/Button';
+import {StatCard} from './calendar/StatCard';
+import {HolidayCard} from './calendar/HolidayCard';
+import {CountdownCard} from './calendar/CountdownCard';
+import {VisualizationCard} from './calendar/VisualizationCard';
+import {useCalendar} from '@/hooks/useCalendar';
 
 type TabType = 'stats' | 'nav' | 'holiday' | 'countdown' | 'visual';
 
@@ -27,7 +27,7 @@ const TabButton: React.FC<{
     onClick: () => void;
     icon: LucideIcon;
     label: string;
-}> = ({ type, activeTab, onClick, icon: Icon, label }) => (
+}> = ({type, activeTab, onClick, icon: Icon, label}) => (
     <Button
         onClick={onClick}
         variant={activeTab === type ? 'primary' : 'secondary'}
@@ -38,6 +38,7 @@ const TabButton: React.FC<{
     </Button>
 );
 
+/* eslint-disable  @typescript-eslint/no-explicit-any */
 const TabContent: React.FC<{
     activeTab: TabType;
     monthStats: any;
@@ -47,24 +48,24 @@ const TabContent: React.FC<{
     setDisplayMonthIndex: (index: number) => void;
     pieChartData: PieChartDataItem[];
 }> = ({
-    activeTab,
-    monthStats,
-    nextHoliday,
-    getCountdown,
-    displayMonthIndex,
-    setDisplayMonthIndex,
-    pieChartData
-}) => {
+          activeTab,
+          monthStats,
+          nextHoliday,
+          getCountdown,
+          displayMonthIndex,
+          setDisplayMonthIndex,
+          pieChartData
+      }) => {
     switch (activeTab) {
         case 'stats':
             return (
                 <div className="space-y-4">
                     <h3 className="text-lg font-medium text-gray-800 dark:text-gray-200">本月统计</h3>
                     <div className="grid grid-cols-2 gap-4">
-                        <StatCard label="总天数" value={monthStats.totalDays} />
-                        <StatCard label="工作日" value={monthStats.workDays} />
-                        <StatCard label="节假日" value={monthStats.holidayDays} />
-                        <StatCard label="调休日" value={monthStats.txDays} />
+                        <StatCard label="总天数" value={monthStats.totalDays}/>
+                        <StatCard label="工作日" value={monthStats.workDays}/>
+                        <StatCard label="节假日" value={monthStats.holidayDays}/>
+                        <StatCard label="调休日" value={monthStats.txDays}/>
                     </div>
                 </div>
             );
@@ -73,7 +74,7 @@ const TabContent: React.FC<{
                 <div className="space-y-4">
                     <h3 className="text-lg font-medium text-gray-800 dark:text-gray-200">快速导航</h3>
                     <div className="grid grid-cols-3 gap-2">
-                        {Array.from({ length: 12 }, (_, i) => (
+                        {Array.from({length: 12}, (_, i) => (
                             <Button
                                 key={i}
                                 onClick={() => setDisplayMonthIndex(i)}
@@ -91,7 +92,7 @@ const TabContent: React.FC<{
                 <div className="space-y-4">
                     <h3 className="text-lg font-medium text-gray-800 dark:text-gray-200">最近节假日</h3>
                     {nextHoliday ? (
-                        <HolidayCard holiday={nextHoliday} />
+                        <HolidayCard holiday={nextHoliday}/>
                     ) : (
                         <p className="text-gray-500 dark:text-gray-400">暂无节假日信息</p>
                     )}
@@ -101,14 +102,14 @@ const TabContent: React.FC<{
             return (
                 <div className="space-y-4">
                     <h3 className="text-lg font-medium text-gray-800 dark:text-gray-200">倒计时</h3>
-                    <CountdownCard getCountdown={getCountdown} />
+                    <CountdownCard getCountdown={getCountdown}/>
                 </div>
             );
         case 'visual':
             return (
                 <div className="space-y-4">
                     <h3 className="text-lg font-medium text-gray-800 dark:text-gray-200">数据可视化</h3>
-                    <VisualizationCard data={pieChartData} />
+                    <VisualizationCard data={pieChartData}/>
                 </div>
             );
         default:
@@ -116,10 +117,10 @@ const TabContent: React.FC<{
     }
 };
 
-export function Sidebar({ holidays }: SidebarProps): ReactElement {
+export function Sidebar({holidays}: SidebarProps): ReactElement {
     const [isOpen, setIsOpen] = useState(false);
     const [activeTab, setActiveTab] = useState<TabType>('stats');
-    
+
     const {
         displayMonthIndex,
         monthStats,
@@ -135,10 +136,10 @@ export function Sidebar({ holidays }: SidebarProps): ReactElement {
     const pieChartData = useMemo<PieChartDataItem[]>(() => {
         const total = monthStats.totalDays;
         return [
-            { label: '工作日', value: monthStats.workDays, color: '#3B82F6' },
-            { label: '节假日', value: monthStats.holidayDays, color: '#EF4444' },
-            { label: '调休日', value: monthStats.txDays, color: '#F59E0B' },
-            { label: '周末', value: monthStats.weekendDays, color: '#10B981' }
+            {label: '工作日', value: monthStats.workDays, color: '#3B82F6'},
+            {label: '节假日', value: monthStats.holidayDays, color: '#EF4444'},
+            {label: '调休日', value: monthStats.txDays, color: '#F59E0B'},
+            {label: '周末', value: monthStats.weekendDays, color: '#10B981'}
         ].map(item => ({
             ...item,
             percentage: ((item.value / total) * 100).toFixed(1)

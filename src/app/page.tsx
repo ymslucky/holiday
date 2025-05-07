@@ -1,6 +1,6 @@
 'use client';
 
-import {useState, useEffect, useMemo, useCallback} from 'react';
+import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import {Calendar} from '@/components/Calendar';
 import {Settings} from '@/components/Settings';
 import {ErrorBoundary} from '@/components/ErrorBoundary';
@@ -52,17 +52,17 @@ export default function HolidayCalendar() {
     }), [currentDate, displayMonthIndex]);
 
     // 使用 useMemo 优化背景样式
-    const backgroundStyle = useMemo(() => 
-        theme === 'dark' 
-            ? 'bg-gradient-to-br from-gray-900 to-gray-800' 
-            : 'bg-gradient-to-br from-blue-50 to-purple-50',
+    const backgroundStyle = useMemo(() =>
+            theme === 'dark'
+                ? 'bg-gradient-to-br from-gray-900 to-gray-800'
+                : 'bg-gradient-to-br from-blue-50 to-purple-50',
         [theme]
     );
 
     if (isLoading) {
         return (
             <div className={`min-h-screen flex items-center justify-center ${backgroundStyle}`}>
-                <LoadingSpinner size="large" />
+                <LoadingSpinner size="large"/>
             </div>
         );
     }
@@ -74,15 +74,7 @@ export default function HolidayCalendar() {
                 onWheel={handleWheel}
             >
                 <Sidebar
-                    currentDate={currentDate}
-                    displayMonthIndex={displayMonthIndex}
                     holidays={holidays}
-                    onMonthChange={setDisplayMonthIndex}
-                    onYearChange={(year) => {
-                        const newDate = new Date(currentDate);
-                        newDate.setFullYear(year);
-                        setCurrentDate(newDate);
-                    }}
                 />
                 <Settings
                     language={language}
