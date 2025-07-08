@@ -3,6 +3,7 @@ import {Geist, Geist_Mono} from "next/font/google";
 import {GoogleAnalytics} from '@next/third-parties/google'
 import {Github} from 'lucide-react';
 import "./globals.css";
+import {Analytics} from "@vercel/analytics/next";
 
 // 字体配置保持不变，next/font 会自动优化预加载
 const geistSans = Geist({
@@ -46,6 +47,7 @@ export default function RootLayout({
 
         {/* Google Analytics */}
         <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID || ''}/>
+        <Analytics/>
         </body>
         </html>
     );
