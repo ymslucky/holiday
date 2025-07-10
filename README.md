@@ -1,6 +1,7 @@
 # 节假日日历项目
 
 在线地址：[https://holiday.meta-p.com](https://holiday.meta-p.com)
+作者邮箱：ymslucky@163.com
 
 ## 项目简介
 
